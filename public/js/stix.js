@@ -19,6 +19,7 @@ function HashMap(hash) {
     return map;
 }
 
+//sleep de java script
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }

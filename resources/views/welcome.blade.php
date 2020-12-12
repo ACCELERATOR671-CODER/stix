@@ -7,9 +7,10 @@
             stix
         </title>
         <link rel="stylesheet" href="css/w3.css">
+        <link rel="stylesheet" href="css/styles.css">
     </head>
-    <body class="antialiased">
-        <div class="w3-container w3-black w3-margin w3-center w3-padding w3-round-xxlarge">
+    <body>
+        <div class="w3-container w3-margin w3-center w3-padding w3-round-xxlarge" id="container-img">
             <canvas id="grid" width="1200" height="880" ></canvas>
             <div class="w3-container w3-white w3-center w3-round-xxlarge">
                 <h3>
