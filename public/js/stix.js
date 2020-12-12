@@ -450,7 +450,7 @@ Stix = {
     },
 
     unit_vector: function (p0, p1) {
-        // returns a king-move vector one space (in one of 8 directions) from p0 to p1'
+        // returns a king-move vector one (in one of 8 directions) from p0 to p1'
         let [x0, y0] = p0;
         let [x1, y1] = p1;
         let ux = this._cmp(x1 - x0, 0);
@@ -1051,7 +1051,7 @@ Player = {
         this.ctx.strokeStyle = "red";
         this.ctx.arc(Grid.offset[0] + (this.position[0] * 3), Grid.offset[1] + (this.position[1] * 3), 5, 0, 2 * Math.PI, true);
         this.ctx.stroke();
-        this.ctx.fillStyle = "white";
+        this.ctx.fillStyle = "green";
         this.ctx.fill();
     },
 

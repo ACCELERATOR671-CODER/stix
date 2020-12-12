@@ -21349,7 +21349,7 @@ Player = {
     this.ctx.strokeStyle = "red";
     this.ctx.arc(Grid.offset[0] + this.position[0] * 3, Grid.offset[1] + this.position[1] * 3, 5, 0, 2 * Math.PI, true);
     this.ctx.stroke();
-    this.ctx.fillStyle = "white";
+    this.ctx.fillStyle = "green";
     this.ctx.fill();
   },
   // Calcular la direccion que debe seguir segun los input
