@@ -11,7 +11,7 @@
     <body class="antialiased">
         <div class="w3-container w3-black w3-margin w3-center w3-padding w3-round-xxlarge">
             <canvas id="grid" width="1200" height="880" ></canvas>
-            <div class="w3-container w3-white w3-margin w3-center w3-round-xxlarge">
+            <div class="w3-container w3-white w3-center w3-round-xxlarge">
                 <h3>
                     Use las flechas para mover el objeto jugable
                     <br>
