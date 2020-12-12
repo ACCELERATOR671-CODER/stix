@@ -433,7 +433,7 @@ Grid = {
 
     // Muestra la puntuacion
     displayScore: function () {
-        this.ctx.fillStyle = 'rgb(255,255,255)';
+        this.ctx.fillStyle = 'rgb(0,0,0)';
         this.ctx.clearRect(0, 0, this.canvas.width - 3, Grid.offset[1] - 3);
         this.ctx.font = "32px Helvetica";
         this.ctx.fillText("Score: " + Player.score, 430, 35);
