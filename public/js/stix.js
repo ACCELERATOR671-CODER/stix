@@ -4,16 +4,16 @@ function HashMap(hash) {
     let _get = map.get;
     let _has = map.has;
     let _delete = map.delete;
-    map.set = function (k, v) {
+    map.set = function(k, v) {
         return _set.call(map, hash(k), v);
     };
-    map.get = function (k) {
+    map.get = function(k) {
         return _get.call(map, hash(k));
     };
-    map.has = function (k) {
+    map.has = function(k) {
         return _has.call(map, hash(k));
     };
-    map.delete = function (k) {
+    map.delete = function(k) {
         return _delete.call(map, hash(k));
     };
     return map;
@@ -34,7 +34,7 @@ inputStates = {};
 
 Key = {
 
-    disableAll: function () {
+    disableAll: function() {
         inputStates.shift = false;
         inputStates.up = false;
         inputStates.down = false;
@@ -42,7 +42,7 @@ Key = {
         inputStates.left = false;
     },
 
-    onKeydown: function (event) {
+    onKeydown: function(event) {
         inputStates.shift = event.shiftKey;
         switch (event.keyCode) {
             case 37:
@@ -65,7 +65,7 @@ Key = {
         }
     },
 
-    onKeyup: function (event) {
+    onKeyup: function(event) {
         switch (event.keyCode) {
             case 37:
                 event.preventDefault();
@@ -96,18 +96,18 @@ game = {
     gameWon: null,
     gameLost: null,
     frameCount: 0,
-    loadAssets: function () {
+    loadAssets: function() {
         start();
     },
 
     // Bucle principal del juego
-    mainLoop: function () {
+    mainLoop: function() {
 
         if (!game.ended) {
             Grid.paint();
             Player.update();
             Player.paint();
-            Grid.sparx.forEach(function (sparx) {
+            Grid.sparx.forEach(function(sparx) {
                 sparx.update();
                 sparx.paint();
             });
@@ -129,7 +129,7 @@ game = {
 
 Grid = {
 
-    dirty_region: function (x, y, border) {
+    dirty_region: function(x, y, border) {
         for (let i = x - border; i < x + border; i++) {
             for (let j = y - border; j < y + border; j++) {
                 if (i >= 0 && i <= this.w && j >= 0 && j <= this.h) {
@@ -154,11 +154,11 @@ Grid = {
         [255, 200, 0], // 9 red
         [255, 200, 0], // 10 TRAILTRACE
         [255, 200, 255] // 11 WALLTRACE
-    ], 
+    ],
 
     sparx: [],
 
-    init: function () {
+    init: function() {
         this.canvas = document.getElementById('grid');
         this.canvas.width = 640;
         this.canvas.height = 480;
@@ -186,24 +186,24 @@ Grid = {
     },
 
     // Limpiar la pantalla
-    clear: function () {
+    clear: function() {
         this.ctx.fillStyle = "#000000";
         this.ctx.clearRect(Grid.offset[0], Grid.offset[1], this.w * 3, this.h * 3);
     },
 
     // Cambiar el valor de una posicion del grid
-    set: function (x, y, v) {
+    set: function(x, y, v) {
         this._grid[(this.w * y) + x] = v;
         this.dirty.set([x, y], 1);
     },
 
     // Conseguir el valor de una posicion del grid
-    get: function (x, y) {
+    get: function(x, y) {
         return this._grid[(this.w * y) + x];
     },
 
     // Reiniciar todos los valores del grid
-    reset: function () {
+    reset: function() {
         this.dirty = new HashMap(JSON.stringify);
 
         // Todos los valores a empty
@@ -244,9 +244,9 @@ Grid = {
         }
     },
 
-    blit: function (x, y, v) {},
+    blit: function(x, y, v) {},
 
-    paint: function () {
+    paint: function() {
         this.dirty.forEach((value, key, map) => {
             let dot = JSON.parse(key);
             let x = dot[0];
@@ -264,18 +264,18 @@ Grid = {
     },
 
     // Devuelve si la coordenada es una pared
-    cell_wall: function (x, y) {
+    cell_wall: function(x, y) {
         return (this.get(x, y) === Player.WALL);
     },
 
     // Devuelve si la coordenada esta vacia
-    cell_empty: function (x, y) {
+    cell_empty: function(x, y) {
         return (this.get(x, y) === Player.EMPTY);
     },
 
     // Cambia el valor v0 a v1 en el grid siguiendo el path de p0 a p1 (sin incluirlos)
     // Comienza a probar por la dirección dir. Devuelve la ultima direccion
-    trace: function (p0, p1, dir, v0, v1) {
+    trace: function(p0, p1, dir, v0, v1) {
         let [x, y] = p0;
         let [dx, dy] = dir;
 
@@ -303,7 +303,7 @@ Grid = {
     },
 
     // Rellena una region bordeada por vlist y conteniendo el punto p0, con el valor v
-    fill: function (p0, vlist, v, invert) {
+    fill: function(p0, vlist, v, invert) {
         let vf = this.vmap(vlist);
         let y_filling = this.seek(p0, [3, 3], vlist);
         if (invert) {
@@ -337,7 +337,7 @@ Grid = {
     },
 
     // Devuelve una funcion que dice si una coordenada contiene alguno de los valores de vset en el grid
-    vmap: function (vset) {
+    vmap: function(vset) {
         let a = [];
         for (let i = 0; i < 16; i++) {
             a.push(vset.includes(i));
@@ -358,19 +358,19 @@ Grid = {
     },
 
     // Comprueba si la coordenada traceable
-    cell_traceable: function (x, y) {
+    cell_traceable: function(x, y) {
         let vf = this.vmap([4, 7]);
         return vf(x, y);
     },
 
     // Comprueba si la coordenada es TRACE
-    cell_draw: function (x, y) {
+    cell_draw: function(x, y) {
         let vf = this.vmap([5]);
         return vf(x, y);
     },
 
     // Comprueba si dos puntos se encuentran en la misma region limitada por vlist
-    seek: function (p0, p1, vlist) {
+    seek: function(p0, p1, vlist) {
         let c = 0;
         let x1, x2, y1, y2;
         let match = this.vmap(vlist);
@@ -414,17 +414,17 @@ Grid = {
     },
 
     // Agrega un crumb en la posicion
-    add_crumb: function (x, y) {
+    add_crumb: function(x, y) {
         this.crumbs[(this.w * y) + x]++;
     },
 
     // Devuelve los crumbs de la posicion
-    get_crumbs: function (x, y) {
+    get_crumbs: function(x, y) {
         return this.crumbs[(this.w * y) + x];
     },
 
     // Dibuja una linea entre los dos puntos
-    drawLine: function (p0, p1) {
+    drawLine: function(p0, p1) {
         this.ctx.beginPath();
         this.ctx.moveTo(p0[0], p0[1]);
         this.ctx.lineTo(p1[0], p1[1]);
@@ -433,8 +433,8 @@ Grid = {
     },
 
     // Muestra la puntuacion
-    displayScore: function () {
-        this.ctx.fillStyle = 'rgb(0,0,0)';
+    displayScore: function() {
+        this.ctx.fillStyle = 'rgb(255,255,255)';
         this.ctx.clearRect(0, 0, this.canvas.width - 3, Grid.offset[1] - 3);
         this.ctx.font = "32px Helvetica";
         this.ctx.fillText("Score: " + Player.score, 430, 35);
@@ -444,13 +444,13 @@ Grid = {
 
 Stix = {
 
-    _cmp: function (x, y) {
+    _cmp: function(x, y) {
         if (x > y) return 1;
         else if (x < y) return -1;
         else return 0;
     },
 
-    unit_vector: function (p0, p1) {
+    unit_vector: function(p0, p1) {
         // returns a king-move vector one (in one of 8 directions) from p0 to p1'
         let [x0, y0] = p0;
         let [x1, y1] = p1;
@@ -468,7 +468,7 @@ Stix = {
         return [ux, uy];
     },
 
-    clear_line: function (p0, p1) {
+    clear_line: function(p0, p1) {
         // slope = (y2 - y1) / (x2 - x1)
         let m = (p1[1] - p0[1]) / (p1[0] - p0[0]);
         // intercept = y - m * x
@@ -513,7 +513,7 @@ Stix = {
         "[-1,0]": [0, -1]
     },
 
-    _construct_: function () {
+    _construct_: function() {
         this.unit_vectors = [
             [1, -1],
             [1, 0],
@@ -587,7 +587,7 @@ Stix = {
         }
     }, // end construct
 
-    _init_: function () {
+    _init_: function() {
         this.p = [
             [55, 55],
             [57, 59]
@@ -601,7 +601,7 @@ Stix = {
         this.phase = 0; // # half of knights move (choices made in phase 0, minor axis offset in phase 1)
     },
 
-    pscan: function (p0, p1) {
+    pscan: function(p0, p1) {
         // 'search for line crossing from odd points p0 to p1; return first crossing point and direction'
         let g = Grid;
         let [x, y] = p0;
@@ -636,7 +636,7 @@ Stix = {
         return null;
     },
 
-    trace_race: function (p0, d0, p1, d1) {
+    trace_race: function(p0, d0, p1, d1) {
         // '''Trace from p0 and p1 clockwise (d0 and d1 respectively) and see who finds the other.
         // Return directions from p0 and p1 towards each other.'''
         let g = Grid;
@@ -679,7 +679,7 @@ Stix = {
     },
 
     // Estrategia aleatoria
-    strategy_random: function (i) {
+    strategy_random: function(i) {
         if (Math.random() > 0.5) {
             this.d[i] = this.dir_clockwise.get(this.d[i]);
         } else {
@@ -688,7 +688,7 @@ Stix = {
     },
 
     // Actualizamos la posicion del Stix
-    update: function () {
+    update: function() {
         let g = Grid;
         // Aquí habrá que devolver el control si el Player acaba de pasar de nivel
         //    return
@@ -792,7 +792,7 @@ Stix = {
     }, // end update
 
     // Dibuja el Stix
-    draw: function () {
+    draw: function() {
 
         for (let h = this.history, dh = this.dhistory, i = 0; i < h.length; i++) {
             Grid.drawLine(h[i][0], h[i][1]);
@@ -862,7 +862,7 @@ class Sparx {
                 options.push([dx, dy]);
                 options.push([this.turn[1]["[" + dx + "," + dy + "]"][0], this.turn[1]["[" + dx + "," + dy + "]"][1]]);
                 let mejorGiro = [Number.MAX_SAFE_INTEGER, [0, 0]];
-                options.forEach(function (giro) {
+                options.forEach(function(giro) {
                     if (Grid.cell_traceable(x + giro[0], y + giro[1])) {
                         if (Grid.get_crumbs(x + giro[0], y + giro[1]) <= mejorGiro[0]) {
                             mejorGiro[0] = Grid.get_crumbs(x + giro[0], y + giro[1]);
@@ -905,12 +905,12 @@ Player = {
     TRAILTRACE: 10,
     WALLTRACE: 11,
     FillScore: [0, 5, 10],
-    add_score: function (n) {
+    add_score: function(n) {
         this.score += n;
     },
 
     // Inicializacion de variables
-    init: function (pos) {
+    init: function(pos) {
         this.position = pos;
         this.ctx = Grid.ctx;
         this.dx = 0;
@@ -923,7 +923,7 @@ Player = {
     },
 
     // Movimiento del Player
-    update: function () {
+    update: function() {
         let [x, y] = this.position;
 
         if (((x + y) & 1) === 0) { // Suma par, se puede girar
@@ -1047,7 +1047,7 @@ Player = {
     },
 
     // Pintar al Player
-    paint: function () {
+    paint: function() {
         this.ctx.beginPath();
         this.ctx.strokeStyle = "red";
         this.ctx.arc(Grid.offset[0] + (this.position[0] * 3), Grid.offset[1] + (this.position[1] * 3), 5, 0, 2 * Math.PI, true);
@@ -1057,7 +1057,7 @@ Player = {
     },
 
     // Calcular la direccion que debe seguir segun los input
-    calc_dir: function () {
+    calc_dir: function() {
         let dx = 0,
             dy = 0,
             draw = 0;
