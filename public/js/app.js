@@ -21405,8 +21405,8 @@ game.loadAssets();
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Xampp\htdocs\stix\stix\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Xampp\htdocs\stix\stix\resources\css\app.css */"./resources/css/app.css");
+__webpack_require__(/*! D:\Xampp\htdocs\stix\stix con base laravel para el enrutamiento y deploy\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Xampp\htdocs\stix\stix con base laravel para el enrutamiento y deploy\resources\css\app.css */"./resources/css/app.css");
 
 
 /***/ })
