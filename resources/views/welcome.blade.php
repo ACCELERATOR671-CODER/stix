@@ -7,7 +7,7 @@
             stix
         </title>
         <link rel="stylesheet" href="css/w3.css">
-        <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="css/styless.css">
     </head>
     <body>
         <div class="w3-container w3-margin w3-center w3-padding w3-round-xxlarge" id="container-img">
